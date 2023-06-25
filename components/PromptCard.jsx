@@ -6,11 +6,11 @@ import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 
 const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
-    const { data: session } = useSession();
-    const pathname = usePathname();
-    const router = useRouter()
-  
-    const [copied, setCopied] = useState("");
+  const { data: session } = useSession();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const [copied, setCopied] = useState("");
   const handleCopy = () => {
     setCopied(post.prompt);
     navigator.clipboard.writeText(post.prompt);
@@ -39,10 +39,7 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
           </div>
         </div>
 
-        <div
-          className="copy_btn"
-          onClick={handleCopy}
-        >
+        <div className="copy_btn" onClick={handleCopy}>
           <Image
             src={
               copied === post.prompt
@@ -61,25 +58,24 @@ const PromptCard = ({ post, handleEdit, handleDelete, handleTagClick }) => {
         className="font-inter text-sm blue_gradient cursor-pointer"
         onClick={() => handleTagClick && handleTagClick(post.tag)}
       >
-        {post.tag}
+        #{post.tag}
       </p>
 
-      {session?.user.id === post.creator._id && pathname === '/profile' && 
-      (
+      {session?.user.id === post.creator._id && pathname === "/profile" && (
         <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
-            <p
+          <p
             className="font-inter text-sm green_gradient cursor-pointer"
             onClick={handleEdit}
-            >
-                Edit
-            </p>
+          >
+            Edit
+          </p>
 
-            <p
+          <p
             className="font-inter text-sm green_gradient cursor-pointer"
             onClick={handleDelete}
-            >
-                Delete
-            </p>
+          >
+            Delete
+          </p>
         </div>
       )}
     </div>
